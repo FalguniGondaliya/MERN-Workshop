@@ -1,4 +1,4 @@
-# Beginner React Projects
+# MERN Workshop
 
 This repository contains beginner-friendly React projects to practice fundamental concepts like state management, event handling, and component structure using **React Hooks**.
 
@@ -26,8 +26,8 @@ Follow these steps to set up and run the projects:
 
 1. Clone the Repository:
 ```bash
-git clone https://github.com/your-username/beginner-react-projects.git
-cd beginner-react-projects
+git clone https://github.com/Falguni-Gondaliya/MERN-Workshop.git
+cd MERN-Workshop
 ```
 
 2. Install Dependencies:
