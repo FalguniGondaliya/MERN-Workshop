@@ -1,39 +1,68 @@
-import React, { useState } from "react";
+import { useState } from 'react';
+import './App.css';
 
-const Todo = () => {
-  const [mydata, setMydata] = useState([]);
-  const [txt1, setTxt1] = useState("");
+function App() {
+  let [todolist, setTodolist] = useState([]);
 
-  const addData = () => {
-    if (txt1.trim()) {
-      setMydata([...mydata, txt1]);
-      setTxt1("");
+  // ✅ Add item
+  let saveTodoList = (event) => {
+    event.preventDefault();
+    let toname = event.target.toname.value.trim();
+
+    if (toname === "") {
+      alert("Please enter a todo name.");
+      return;
     }
+
+    if (!todolist.includes(toname)) {
+      let finalDOlist = [...todolist, toname];
+      setTodolist(finalDOlist);
+    } else {
+      alert("Todo name already exists...");
+    }
+
+    event.target.reset(); // clear input after submit
   };
 
-  const removeAll = () => {
-    setMydata([]);
+  // ✅ Delete item by index
+  const deleteTodo = (indexToDelete) => {
+    const updatedList = todolist.filter((_, index) => index !== indexToDelete);
+    setTodolist(updatedList);
   };
+
+  let list = todolist.map((value, index) => {
+    return (
+      <ToDolistItems
+        key={index}
+        value={value}
+        index={index}
+        deleteTodo={deleteTodo}
+      />
+    );
+  });
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <h1>Todo List</h1>
-      <input
-        type="text"
-        value={txt1}
-        onChange={(e) => setTxt1(e.target.value)}
-        placeholder="Enter task"
-      />
-      <button onClick={addData}>Add</button>
-      {mydata.length > 0 && <button onClick={removeAll} style={{ marginLeft: "10px" }}>Remove All</button>}
-
-      <ul>
-        {mydata.map((value, index) => (
-          <li key={index}>{value}</li>
-        ))}
-      </ul>
+    <div className="App">
+      <h1>TODO list</h1>
+      <form onSubmit={saveTodoList}>
+        <input type="text" name="toname" />
+        <button>Save</button>
+      </form>
+      <div className="outerDiv">
+        <ul>{list}</ul>
+      </div>
     </div>
   );
-};
+}
 
-export default Todo;
+export default App;
+
+// ✅ Component to display each item
+function ToDolistItems({ value, index, deleteTodo }) {
+  return (
+    <li>
+      {value}
+      <span onClick={() => deleteTodo(index)}>&times;</span>
+    </li>
+  );
+}
